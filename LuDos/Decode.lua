@@ -3,11 +3,8 @@ function Decode(INPUT)
     local CurrentWord = ""
     local Decoded = {}
 
-
     for pos = 1, #INPUT do
         local char = INPUT:sub(pos, pos)
-
-
 
         if (char == "\n") then
             if (CurrentWord ~= "") then

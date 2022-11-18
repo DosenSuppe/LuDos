@@ -1,0 +1,53 @@
+arr mak L1 < # # # >
+arr mak L2 < # # # > 
+arr mak L3 < # # # >
+
+
+put O r-1       First Player Symbol
+put X r-2       Second Player Symbol
+
+put 1 r1        First Player 
+put 2 r2        Second Player 
+
+put r1 r3       Current Player
+
+put 0 r99       Current Array-Line (L1/L2/L3)
+put 0 r4        Reserved for Player input 
+
+
+SetL1 ( arr rep L1 r4 r-3 )
+SetL2 ( arr rep L2 r4 r-3 )
+SetL3 ( arr rep L3 r4 r-3 )
+
+ValidateL1 ( com r4 > 0 goto SetL1 ?? GetInput )
+ValidateL2 ( com r4 > 3 goto SetL2 )
+ValidateL3 ( com r4 > 6 goto SetL3 )
+
+getPos (
+    com r4 <= 3 goto ValidateL1 
+    com r4 <= 6 goto ValidateL2
+    com r4 <= 9 goto ValidateL3 
+    com r4 > 9 goto GetInput
+)
+
+
+P1_Move (
+    put r-1 r-3
+    goto getPos
+)
+
+
+P2_Move ( 
+    put r-2 r-3
+)
+
+
+GetInput (
+    inp int 
+    inp int 
+    put acc r4
+    com r3 == r1 goto P1_Move ?? P2_Move
+)
+
+goto GetInput
+

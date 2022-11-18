@@ -392,13 +392,13 @@ local function Syntax(DecodedInput)
             end
 
 
-        elseif (Word == "inp") then -- user input (Numbers only)
+        elseif (Word == "inp") then -- user input 
 
-            if (NextWord == "INT") then
+            if (NextWord:lower() == "int") then
                 local Input = DosLib.In.ReadNum() or 0
                 ACCUMULATOR = Input
 
-            elseif (NextWord == "STR") then
+            elseif (NextWord:lower() == "str") then
                 local Input = io.read() or "NAN"
                 ACCUMULATOR = Input
 
@@ -408,7 +408,7 @@ local function Syntax(DecodedInput)
             end
             Current = Current + 1
 
-        elseif (Word == "com") then -- comparing two "registers"
+        elseif (Word == "com") then -- comparing two variables
 
             if (NextWord) then
                 local OPERATIONS = {"<", ">", "==", "~=", ">=", "<="}
@@ -420,11 +420,14 @@ local function Syntax(DecodedInput)
 
                     local RESULT
                     if (tonumber(GetVal(NextWord)) and tonumber(GetVal(_4th))) then
+                        -- using Lua's load()-method to return the boolean value by comparing value1 with value2
                         RESULT = load("return "..GetVal(NextWord).." "..OPERATION.." "..GetVal(_4th))()
                     else
                         RESULT = load("return \""..GetVal(NextWord).."\" "..OPERATION.." \""..GetVal(_4th).."\"")()
                     end
 
+                    -- 2 -> true
+                    -- 1 -> false (idk why but it works lol)
                     if (RESULT) then
                         ACCUMULATOR = 2
                     else

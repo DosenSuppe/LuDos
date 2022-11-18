@@ -3,15 +3,14 @@ DosLib.Class = {}
 DosLib.Math = {}
 DosLib.Event = {}
 DosLib.Table = {}
-DosLib.out = {}
+DosLib.Out = {}
 DosLib.In = {}
 
 --[[
             OUT LIB
 ]]
---- Custom error function
---- @return nil
-DosLib.out.Error = function(...)
+--- Custom error function // kinda useless
+DosLib.Out.Error = function(...)
     print(...)
 end
 
@@ -19,18 +18,16 @@ end
             IN LAB
 ]]
 --- Only accepts numbers as input
---- @return number
 DosLib.In.ReadNum = function()
     local Input = io.read()
     if (tonumber(Input)) then
         return tonumber(Input) or 0
     end
-    DosLib.out.Error("Input has to be a number!")
+    DosLib.Out.Error("Input has to be a number!")
     return 0
 end
 
 --- Only accepts booleans as input
---- @return boolean
 DosLib.In.ReadBool = function()
     local Input = io.read()
     if (Input:lower() == "true") then
@@ -38,7 +35,7 @@ DosLib.In.ReadBool = function()
     elseif (Input:lower() == "false") then
         return false
     end
-    DosLib.out.Error("Input has to be a boolean!")
+    DosLib.Out.Error("Input has to be a boolean!")
     return false
 end
 
@@ -46,7 +43,6 @@ end
             TABLE LIB
 ]]
 --- returns either false or the key/id of the given element in a given array/ dictionary
---- @param tab table
 function DosLib.Table.find(tab, element)
     for i, v in pairs(tab) do
         if (i == element or v == element) then
@@ -60,22 +56,15 @@ end
             MATH LIB
 ]]
 --- returns the inverse of the given number
---- @param x number
---- @return number
 function DosLib.Math.Inverse(x) return -x end
 
 --- Calculates an equation within a string
---- @param str string
---- @return number
 function DosLib.Math.StrEquation(str) return load("return "..str)() end
 
 --[[
             CLASS LIB
 ]]
 --- Creates new class
---- @param ClassName string
---- @param ClassDetails table
---- @return table
 function DosLib.Class.new(ClassName, ClassDetails)
     Class = {}
     Class.Name = ClassName
@@ -94,8 +83,6 @@ end
             EVENT LIB
 ]]
 --- creates new event
---- @param EventId string
---- @return table
 function DosLib.Event.new(EventId)
     local ClassDetails = {
         EventId = EventId,
@@ -103,24 +90,21 @@ function DosLib.Event.new(EventId)
             Connections = {},
 
             --- Connect a function to the Event
-            --- @param func function
-            --- @return table
             Connect = function(self, func)
                 if (not DosLib.Table.find(self.Connections, func)) then
                     table.insert(self.Connections, func)
                 else
-                    DosLib.out.Error("Function is already in Event!")
+                    DosLib.Out.Error("Function is already in Event!")
                 end
 
                 return {
                 --- returns the disconnector function
-                --- @return nil
                 disconnect=function()
                     local Pos = DosLib.Table.find(self.Connections, func)
                     if (Pos) then
                         table.remove(self.Connections, Pos)
                     else
-                        DosLib.out.Error("Function is not in Event!")
+                        DosLib.Out.Error("Function is not in Event!")
                     end
                 end}
             end},
