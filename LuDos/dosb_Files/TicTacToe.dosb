@@ -1,0 +1,151 @@
+Pointers 1 to 9 are used for the board
+Register 1 to 2 store player data
+
+Players
+put 1 r1    # player 1
+put 2 r2    # player 2
+
+put 1 r3    # CurrentPlayer
+
+# TicTacToe-Board functions
+CreateBoard (
+    put 0 r11
+    put 0 r12
+    put 0 r13
+    put 0 r14
+    put 0 r15
+    put 0 r16
+    put 0 r17
+    put 0 r18
+    put 0 r19 )
+
+# prints out board
+PrintBoard (
+    prt r11 r12 r13
+    prt r14 r15 r16
+    prt r17 r18 r19 )
+
+# Change current player
+ChangePlayer1 (
+    put r1 r3 )
+
+ChangePlayer2 (
+    put r2 r3 )
+
+# error
+INVALID ( prt INVALID_MOVE_ERROR )
+
+# checking if the tile is taken already
+Set1 ( put r3 r11 ) Check1 ( com r11 == 0 goto Set1 )
+
+Set2 ( put r3 r12 ) Check2 ( com r12 == 0 goto Set2 )
+
+Set3 ( put r3 r13 ) Check3 ( com r13 == 0 goto Set3 )
+
+Set4 ( put r3 r14 ) Check4 ( com r14 == 0 goto Set4 )
+
+Set5 ( put r3 r15 ) Check5 ( com r15 == 0 goto Set5 )
+
+Set6 ( put r3 r16 ) Check6 ( com r16 == 0 goto Set6 )
+
+Set7 ( put r3 r17 ) Check7 ( com r17 == 0 goto Set7 )
+
+Set8 ( put r3 r18 ) Check8 ( com r18 == 0 goto Set8 )
+
+Set9 ( put r3 r19 ) Check9 ( com r19 == 0 goto Set9 )
+
+# checkwin 
+WIN ( 
+    goto CreateBoard
+    put r3 stack point *PlayerWon
+    put r1 r3
+
+    prt *PlayerWon has won the game 
+    )
+
+
+line1 ( com r12 == r3 goto line1_ )
+line1_ ( com r13 == r3 goto WIN )
+
+line2 ( com r15 == r3 goto line2_ )
+line2_ (com r16 == r3 goto WIN )
+
+line3 ( com r18 == r3 goto line3_ )
+line3_ ( com r19 == r3 goto WIN )
+
+row1 ( com r14 == r3 goto row1_ )
+row1_ ( com r17 == r3 goto WIN )
+
+row2 ( com r15 == r3 goto row2_ )
+row2_ ( com r18 == r3 goto WIN )
+
+row3 ( com r16 == r3 goto row3_ )
+row3_ ( com r19 == r3 goto WIN )
+
+di1 ( com r15 == r3 goto di1_ )
+di1_ (com r17 == r3 goto WIN )
+
+di2 ( com r15 == r3 goto di2_ )
+di2_ ( com r19 == r3 goto WIN )
+
+CheckWin (
+    com r11 == r3 goto line1 
+    com r14 == r3 goto line2 
+    com r17 == r3 goto line3 
+    
+    com r11 == r3 goto row1 
+    com r12 == r3 goto row2 
+    com r13 == r3 goto row3 
+    
+    com r11 == r3 goto di1 
+    com r13 == r3 goto di2 )
+
+
+# main function
+MakeMove (
+    prt Your_Input:
+
+    inp INT
+    put acc stack point *INPUT
+    
+    com *INPUT == 1 goto Check1
+    com *INPUT == 2 goto Check2
+    com *INPUT == 3 goto Check3
+    com *INPUT == 4 goto Check4
+    com *INPUT == 5 goto Check5
+    com *INPUT == 6 goto Check6
+    com *INPUT == 7 goto Check7
+    com *INPUT == 8 goto Check8
+    com *INPUT == 9 goto Check9
+
+    goto PrintBoard
+    goto CheckWin
+
+    com r3 == r1 goto ChangePlayer2 ?? ChangePlayer1 )
+
+# set up
+goto CreateBoard
+goto PrintBoard
+
+# gameloop
+loop1 (
+    goto MakeMove
+    goto loop2 )
+loop2 ( goto loop1 )
+
+goto loop1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

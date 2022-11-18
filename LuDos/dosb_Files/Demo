@@ -1,0 +1,49 @@
+arr mak TestArray1 < 10 20 30 >
+arr mak TestArray2 < 40 50 60 >
+arr mak TestArray3 < 70 80 90 >
+
+put 0 r2
+put TestArray1 r1
+goto PrintArray
+
+put 0 r2
+put TestArray2 r1
+goto PrintArray
+
+put 0 r2
+put TestArray3 r1
+goto PrintArray
+
+put 0 r3 <- SUM
+
+arrSum ( 
+	arr idx r1 r2
+
+	add acc r3
+	add 1 r2 
+
+	arr sze r1
+	com r2 <= acc goto arrSum
+)
+
+put TestArray1 r1
+put 1 r2 <- IDX
+goto arrSum
+
+put TestArray2 r1
+put 1 r2
+goto arrSum
+
+put TestArray3 r1
+put 1 r2
+goto arrSum
+
+prt r3 ::END
+
+put 100 stack
+put 200 stack
+
+pop
+prt r1 ::END
+
+
