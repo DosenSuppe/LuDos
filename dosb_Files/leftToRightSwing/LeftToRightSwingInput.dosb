@@ -1,0 +1,65 @@
+arr mak L1 < : ' ' ' ' ' ' ' ' ' ' ' ' ' ' '  : >
+
+currentIndex
+put 2 r0
+
+aheadIndex
+put 3 r1
+
+direction 
+put 1 r3
+
+changeDir1 ( 
+    put -1 r3 
+
+    put r0 r10
+    sub r10 1
+    put r10 r1 
+
+    goto continue 
+)
+changeDir2 ( 
+    put 1 r3 
+
+    put r0 r10
+    add r10 1
+    put r10 r1 
+
+    goto continue
+)
+
+changeDirection (
+    com r3 == 1 goto changeDir1 ?? changeDir2
+)
+
+continue (
+    arr rep L1 r0 '
+    arr rep L1 r1 #
+
+    add r0 r3
+    add r1 r3
+)
+
+
+inp num
+put acc r76
+put 0 r77
+
+
+stop (
+    break 
+)
+
+:main (
+    arr idx L1 r1
+
+    com acc ~= : goto continue ?? changeDirection  
+
+    prt !L1 ::END ::CLEAR
+
+    add r77 1
+    com r77 >= r76 goto stop
+    
+    slp 0.025
+)
+

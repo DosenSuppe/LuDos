@@ -1,0 +1,15 @@
+    Creating an array containing words
+arr mak a1 < Hello World. This program is written in DOSB! DOSB is a small instruction-based programming language with many
+             use cases as it has the same features as modern programming languages like lua, C, C++ and python with the syntax of assembly! >
+
+    converting that array to a single string -> putting it into r1-register
+str con !a1 r1
+
+    overwriting the file ./testsave.txt with the content of the r1-register
+io write ./testsave.txt ovr r1
+
+    reading the content of the ./testsave.txt 
+io read ./testsave.txt
+
+    printing out the result of the file-read
+prt acc ::END

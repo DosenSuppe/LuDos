@@ -1,0 +1,4 @@
+
+prt What file would you like to be executed? ::END
+inp str
+run acc

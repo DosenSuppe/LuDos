@@ -1,0 +1,20 @@
+
+
+SELECT _Name, Geburtsdatum, TIMESTAMPDIFF(YEAR, Geburtsdatum, CURRENT_DATE) _alter
+FROM Kunden
+ORDER BY _alter DESC
+LIMIT 1;
+
+
+
+arr mak L1 < 1 2 3 Hello World! >  
+
+str con !L1 r1 
+
+io write ./testsave.txt ovr !L1
+io read ./testsave.txt
+prt acc ::END
+
+arr con string arrayName
+
+prt r1 
