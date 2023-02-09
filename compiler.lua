@@ -20,19 +20,22 @@ local DosLib = require("DosLib")
 
 local ARRAYS = {}
 local POINTERS = {}
+
 local STACK = {}
 local BUILD_IN_FUNCTIONS = require("module")
 local BUILD_IN_LOOPS = {}
 local ACCUMULATOR
 local REGISTERS = {}
+local LAMBDABODIES = {}
 
--- presetting each register with value 0. removing the operation-on-nill error
+-- presetting each register with value 0. removing the operation-on-nil error
 for i = -9, 99, 1 do
     REGISTERS[i] = 0
 end
 
 --keeps track of runtime for randomseed
 local BeforeClock = os.time()
+math.randomseed(BeforeClock)
 
 -- takes in a string input and returns a table with details about the word (the word itself, Line-Position)
 local function Decode(INPUT)
@@ -70,6 +73,7 @@ end
 -- returns string representation of the given array
 local function arrPrint(arr, clear)
     local res = "{ "
+    if (clear) then res="" end
 
     for i, c in pairs(arr) do
         if clear then
@@ -98,9 +102,15 @@ end
 -- Checks if the given word is a variable, pointer, accumulator or array
 -- returns either the value or returns the word itself
 local function GetVal(Word, clear)
-    if #Word-1 <= 2 and Word:sub(1, 1) == "r" then -- register
+    if #Word-1 <= 2 and #Word-1 > 0 and Word:sub(1, 1) == "r" then -- register
         local BufferX = tonumber(Word:sub(2))
         return REGISTERS[BufferX]
+
+    elseif Word == "\\!" then
+        return "!"
+
+    elseif Word == "\\w" then
+        return " "
 
     elseif Word == "\\s" then
         return ""
@@ -169,6 +179,10 @@ local function Syntax(DecodedInput)
             FunctionBody.Current = FunctionBody.Current  + 1
             Token = DecodedInput[FunctionBody.Current]
         end
+        
+        for i, c in pairs(BUILD_IN_FUNCTIONS) do
+            
+        end
 
         return FunctionBody
     end
@@ -194,19 +208,22 @@ local function Syntax(DecodedInput)
             if (#NextWord==2 or #NextWord==3 and NextWord:sub(1,1)=="r") then
                 local reg = tonumber(NextWord:sub(2)) or 1
 
-                -- moving first value of stack to given variable
-                -- removing the value from the stack
-                REGISTERS[reg] = STACK[1]
-                table.remove(STACK, 1)
+                if (#STACK<1)then
+                    REGISTERS[reg] = 0
+                else
+                    -- moving first value of stack to given variable
+                    -- removing the value from the stack
+                    REGISTERS[reg] = STACK[1]
+                    table.remove(STACK, 1)
 
-                -- updating the pointers positions
-                for i, pointer in pairs(POINTERS) do
-                    POINTERS[i] = pointer-1
-                    if (pointer-1==0) then
-                        POINTERS[i] = nil
+                    -- updating the pointers positions
+                    for i, pointer in pairs(POINTERS) do
+                        POINTERS[i] = pointer-1
+                        if (pointer-1==0) then
+                            POINTERS[i] = nil
+                        end
                     end
                 end
-
                 Current = Current + 1
             end
 
@@ -302,6 +319,24 @@ local function Syntax(DecodedInput)
                 end
             end
 
+        -- modulo operation
+        elseif (Word == "mod") then -- syntax: mod r1 2 // valueOf(r1) % 2 -> newValueOf(r1)
+            if (NextWord) then
+                if (DecodedInput[Current+2]) then
+                    local ThirdWord = DecodedInput[Current+2].Word
+                    local Mod = tonumber(GetVal(ThirdWord)) or 1
+
+                    if (tonumber(GetVal(ThirdWord)) == nil) then Current = Current - 1 end
+
+                    local Value = GetVal(NextWord)
+
+                    local BufferX = tonumber(NextWord:sub(2)) or 1
+                    REGISTERS[BufferX] = Value % Mod
+
+                    Current = Current + 2
+                end
+            end
+
         -- puts a value into another variable or the stack
         -- e.g.: put 100 r1 <- puts 100 into r1-variable
         -- e.g.: put r1 r2 <- puts value of r1-variable into r2-variable (r1's value stays untouched)
@@ -379,6 +414,13 @@ local function Syntax(DecodedInput)
                 elseif (NextWord:sub(1,1) == "*") then
                     POINTERS[NextWord] = nil
 
+                elseif (NextWord:sub(1,1) == "!") then
+                    local Array = NextWord:sub(2, #NextWord)
+
+                    if (Array) then
+                        ARRAYS[Array] = nil
+                    end
+
                 elseif (NextWord == "acc") then
                     ACCUMULATOR = 0
                 end
@@ -390,12 +432,16 @@ local function Syntax(DecodedInput)
         elseif (Word == "mul") then
             if (NextWord) then
                 if (DecodedInput[Current+2]) then
+
                     local ThirdWord = DecodedInput[Current+2].Word
-                    local AddTo = GetVal(ThirdWord)
+                    local SubTo = tonumber(GetVal(ThirdWord)) or 2
+
+                    if (tonumber(GetVal(ThirdWord)) == nil) then Current = Current - 1 end
+
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(ThirdWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value * AddTo
+                    local BufferX = tonumber(NextWord:sub(2)) or 1
+                    REGISTERS[BufferX] = Value * SubTo
 
                     Current = Current + 2
                 end
@@ -406,18 +452,20 @@ local function Syntax(DecodedInput)
         elseif (Word == "div") then
             if (NextWord) then
                 if (DecodedInput[Current+2]) then
+
                     local ThirdWord = DecodedInput[Current+2].Word
-                    local AddTo = GetVal(ThirdWord)
+                    local SubTo = tonumber(GetVal(ThirdWord)) or 2
+
+                    if (tonumber(GetVal(ThirdWord)) == nil) then Current = Current - 1 end
+
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(ThirdWord:sub(2)) or 1
-                    REGISTERS[BufferX] = AddTo / Value
+                    local BufferX = tonumber(NextWord:sub(2)) or 1
+                    REGISTERS[BufferX] = Value / SubTo
 
                     Current = Current + 2
                 end
             end
-
-        
 
         -- string instructions
         elseif (Word == "str") then
@@ -433,7 +481,12 @@ local function Syntax(DecodedInput)
                 -- e.g.: str add "World" r1 <- r1 = r1.."World" -> "Hello World" // note that a space " " is beind added automatically! 
                 if (NextWord == "add") then
                     local reg = tonumber(FourthWord.Word:sub(2)) or 1
-                    REGISTERS[reg] = REGISTERS[reg].." "..ThirdWord.Word
+                    local sep = ""
+                    local with = DecodedInput[Current+4].Word
+                    if (with == "space") then
+                        sep = " "
+                    end
+                    REGISTERS[reg] = REGISTERS[reg]..sep..GetVal(ThirdWord.Word)
 
                 -- removes given length of characters from given string stored in variable
                 -- e.g.: str sub 3 r1 <- r1 = string.sub(r1, 1, 3)
@@ -451,7 +504,12 @@ local function Syntax(DecodedInput)
                     local String = GetVal(ThirdWord.Word, false)
                     local seperator = GetVal(FourthWord.Word, false)
                     local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
-                    REGISTERS[reg] = String.split
+                    REGISTERS[reg] = DosLib.String.split(String, seperator)
+
+                elseif (NextWord == "lower") then
+                    local _str = tostring(GetVal(ThirdWord.Word))
+                    local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
+                    REGISTERS[reg] = string.lower(_str)
                 end
             end
 
@@ -545,13 +603,30 @@ local function Syntax(DecodedInput)
             end
             Current = Current + 1
 
+            -- returns the ascii value of given input character
+        elseif (Word == "asc") then
+            if (NextWord == "con") then
+                local ThirdWord = DecodedInput[Current+2].Word
+                local Val = tonumber(GetVal(ThirdWord)) or 0
+                local ASCII_Value = string.char(Val)
+                ACCUMULATOR = ASCII_Value
+                Current = Current+2
+
+            elseif (NextWord == "frm") then
+                local ThirdWord = DecodedInput[Current+2].Word
+                local Val = tostring(GetVal(ThirdWord))
+                local ASCII_Value = string.byte(Val)
+                ACCUMULATOR = ASCII_Value
+                Current = Current+2
+            end
+
         elseif (Word == "com") then -- comparing two variables
             -- compares the truth of two given values
 
             if (NextWord) then
                 local OPERATIONS = {"<", ">", "==", "~=", ">=", "<=", "inner_limits", "outter_limits"}
                 local OPERATION = DecodedInput[Current+2].Word
-                
+
                 local _4th = DecodedInput[Current+3].Word
 
                 if (DosLib.Table.find(OPERATIONS, OPERATION)) then
@@ -625,6 +700,27 @@ local function Syntax(DecodedInput)
                 Syntax(BUILD_IN_FUNCTIONS[NextWord]) -- executing a method
             end
 
+        elseif (Word == "get_time") then
+            if (NextWord == "format") then
+                local Format = GetVal(DecodedInput[Current+2].Word)
+                local withTime = DecodedInput[Current+3].Word
+                local Time
+                if (withTime == "with") then
+                    Time = GetVal(DecodedInput[Current+4].Word)
+                    Current = Current + 1
+                else
+                    Time = os.time()
+                end
+
+                ---@diagnostic disable-next-line: param-type-mismatch
+                ACCUMULATOR = os.date(Format, Time)
+                Current = Current + 2
+
+            elseif (NextWord == "in_sec") then
+                ACCUMULATOR = os.time()
+                Current = Current + 1
+            end
+
         -- sleep/ delay method
         elseif (Word == "slp") then
             local startTime = os.clock()
@@ -676,9 +772,56 @@ local function Syntax(DecodedInput)
                 BeforeClock = os.time()
                 math.randomseed(BeforeClock)
             end
+
+            Range[1] = GetVal(Range[1])
+            Range[2] = GetVal(Range[2])
             local randomNumber = math.random(Range[1], Range[2])
             REGISTERS[reg] = randomNumber
             Current = Current + 2
+
+        -- lambda ExpressionName ( x:10 y:20 z:30 : x+y+z+1 )
+        elseif (Word == "lambda") then
+            local Name = GetVal(NextWord)
+
+            -- constructs the lambda
+            local function constructLambda(Body)
+                local LambdaBody = Body.Body
+                local Expression = ""
+                local ExpressionOn = false
+
+                for i, token in pairs(LambdaBody) do
+                    if (not ExpressionOn) then
+                        local VarInfo = DosLib.String.split(token.Word,":")
+
+                        if (#VarInfo<2) then
+                            ExpressionOn = true
+                            Expression = Expression.."return "
+                            goto ex_loop
+                        end
+
+                        Expression = Expression.."local "..VarInfo[1].." = "..tostring(GetVal(VarInfo[2])).."\n"
+                    end
+                    if (ExpressionOn) then
+                        Expression = Expression..tostring(GetVal(token.Word))
+                    end
+                    ::ex_loop::
+                end
+
+                return Expression
+            end
+
+            -- calling the lambda
+            if (LAMBDABODIES[Name] and DecodedInput[Current+2].Word ~= "(") then
+                ACCUMULATOR = load(constructLambda(LAMBDABODIES[Name]))()
+                Current = Current + 1
+
+            else
+                local Body = ConstructFunction(Current+3)
+                LAMBDABODIES[Name] = Body
+
+                Current = Body.Current
+            end
+
 
         elseif (Word == "io") then
             if (NextWord == "read") then
@@ -693,29 +836,47 @@ local function Syntax(DecodedInput)
                 local Filepath = DecodedInput[Current+2].Word
                 local WriteMode = DecodedInput[Current+3].Word
                 local Content = GetVal(DecodedInput[Current+4].Word)
+                local param = GetVal(DecodedInput[Current+5].Word)
 
-                if (WriteMode=="add") then
+                if (WriteMode=="add") then -- adding content to the selected file
                     local File = io.open(Filepath, "r") or ""
                     local PreContent = File:read("a")
                     File:close()
+
+                    if (param) then
+                        if (param == "new_line") then -- sets the new content to the new line
+                            Content = Content.."\n"
+                            Current = Current + 1
+
+                        elseif (param == "first_line") then -- puts new content always ontop of the file it's written to
+                            local swap = PreContent
+                            PreContent = Content.."\n"
+                            Content = swap
+                            Current = Current + 1
+                        end
+                    end
+
                     io.open(Filepath,"w"):write(PreContent..Content):close()
                     Current = Current + 3
 
-                elseif (WriteMode=="ovr") then
+                elseif (WriteMode=="ovr") then -- overwriting the selected file with the given content
                     io.open(Filepath, "w+"):write(Content):close()
                     Current = Current + 3
                 end
             end
+
         else
-            if (NextWord) then
-                if (NextWord == "(") then
-                    local Body = ConstructFunction(Current+2)
+            if (NextWord == "(") then
+                local Body = ConstructFunction(Current+2)
+                
+                BUILD_IN_FUNCTIONS[Word] = Body.Body
 
-                    BUILD_IN_FUNCTIONS[Word] = Body.Body
-
-                    Current = Body.Current
-
+                -- FirstRun function
+                if (DecodedInput[Current-1].Word == "start") then 
+                    Syntax(BUILD_IN_FUNCTIONS[Word])
                 end
+
+                Current = Body.Current
             end
         end
 
@@ -730,50 +891,55 @@ end
 -- loading files
 local InputFile = io.read()
 
-local RealTimeCompilation = ""
+local RT_Mode = ""
 
 if (InputFile:sub(1,4) == "rtm") then
     io.write("Run-on-Terminal-Mode is now activated!\n\n")
     local ended = false
 
+    -- reading input until the user leaves the mode 
+    -- then changes to execute-mode
     repeat
         io.write("=> ")
         local input = io.read()
-        if (input:lower()=="/exit") then ended = true goto skipToEnd end
 
-        RealTimeCompilation = RealTimeCompilation..input.."\n"
- 
-        ::skipToEnd::
+        -- exit rt-mode
+        if (input:lower()=="/exit") then
+            ended = true
+        else 
+            RT_Mode = RT_Mode..input.."\n"
+        end
+
     until ended
+
     io.write("\nOutput:\n")
-    Syntax(Decode(RealTimeCompilation))
+    Syntax(Decode(RT_Mode))
 
     io.write("PRESS \"ENTER\" TO END THE PROGRAM")
     io.read()
 else
+    if (InputFile:sub(#InputFile-4, #InputFile) == ".dosb") then
+        local file = io.open(InputFile)
+        if (not file) then return end
 
-if (InputFile:sub(#InputFile-4, #InputFile) == ".dosb") then
-    local file = io.open(InputFile)
-    if (not file) then return end
+        local FILE_CONTENT = file:read("a")
+        file:close()
 
-    local FILE_CONTENT = file:read("a")
-    file:close()
+        print("--------------------")
+        print("running programm: " .. InputFile)
+        print("--------------------\n")
 
-    print("--------------------")
-    print("running programm: "..InputFile)
-    print("--------------------\n")
+        local start = os.clock()
 
-    local start = os.clock()
+        local Decoded = Decode(FILE_CONTENT)
+        local DecodeTime = os.clock()
 
-    local Decoded = Decode(FILE_CONTENT)
-    local DecodeTime = os.clock()
+        Syntax(Decoded)
 
-    Syntax(Decoded)
-
-    io.write("\nTOTAL RUN-TIME: "..tostring(os.clock()-start).."\nDECODE RUN-TIME: "..tostring(DecodeTime-start).."\nRUN-TIME: "..tostring(os.clock()-DecodeTime).."\n")
-    io.write("PRESS \"ENTER\" TO END THE PROGRAM")
-    io.read()
-else
-    print("INVALID FILE!")
-end
+        io.write("\nTOTAL RUN-TIME: "..tostring(os.clock()-start).."\nDECODE RUN-TIME: "..tostring(DecodeTime-start).."\nRUN-TIME: "..tostring(os.clock()-DecodeTime).."\n")
+        io.write("PRESS \"ENTER\" TO END THE PROGRAM")
+        io.read()
+    else
+        print("INVALID FILE!")
+    end
 end
