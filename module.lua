@@ -7,16 +7,8 @@
 local Decode = require("Decode")
 
 return {
-     ["test_function_start"] = Decode([[
-        put 0 r1 
-        goto test_function 
-     ]]),
-
-     ["test_function"] = Decode([[
-        add r1 1
-        com r1 < 10 goto test_function 
-
-        prt r1 ::END 
+     ["break"] = Decode([[
+        break
      ]])
 }
 
