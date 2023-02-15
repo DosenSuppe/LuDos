@@ -1,7 +1,0 @@
-
-arr mak MyArray < 1 2 3 \s >
-
-
-put 100 stack point *Yes
-
-prt !MyArray *Yes ::END ::SEP_LINE ::CLEAR
