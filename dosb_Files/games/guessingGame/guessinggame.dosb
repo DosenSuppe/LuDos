@@ -1,0 +1,55 @@
+GreaterThan (
+    prt Die gesuchte Zahl ist groesser als die von Ihnen eingebene Zahl. ::END
+    prt Versuche: r2 / r3 ::END 
+)
+
+LessThan (
+    prt Die gesuchte Zahl ist kleiner als die von Ihnen eingebene Zahl. ::END 
+)
+
+Correct (
+    prt Glueckwunsch! Sie haben die gesuchte Zahl erraten ::END 
+    prt Sie haben r2 / r3 Versuchen gebraucht. ::END
+
+    goto end
+)
+
+Fail (
+    prt Sie haben alle Versuche aufgebraucht. Die gesuchte Zahl war: r1 ::END 
+    goto end 
+)
+
+    Creating a random number  
+prt Bitte geben Sie einen Maximalwert an: ::END
+inp num
+put acc stack point *UpperLimit  
+rnd r1 1:*UpperLimit
+prt r1 ::END
+
+    Current attempt
+put 0 r2
+
+    Set max attempts
+put 10 r3 
+
+end ( 
+    arr mak arr < Benutzte Versuche: r2 // Maximale Versuche: r3 // Geheimzahl: r1 >
+    str con !arr r4
+
+    io write ./testsave.txt add r4 first_line
+
+    break
+)
+
+:main (
+    prt Bitte geben Sie Zahl ein: ::END 
+    inp num
+    put acc r0 
+
+    com r0 > r1 goto LessThan
+    com r0 < r1 goto GreaterThan
+
+    add r2 1
+    com r2 == r3 goto Fail
+    com r0 == r1 goto Correct
+)

@@ -1,0 +1,17 @@
+arr mak MyArray < >
+
+
+put 15 r1 
+put 0 r2 
+
+
+
+:loop (
+
+    arr rep MyArray r2 !MyArray
+    add r2 
+    
+    com r2 == r1 goto break
+)
+
+prt !MyArray ::END ::CLEAR

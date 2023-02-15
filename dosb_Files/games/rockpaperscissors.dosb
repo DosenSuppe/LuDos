@@ -1,0 +1,62 @@
+
+scissors ( put Schere stack )
+paper ( put Papier stack )
+rock ( put Stein stack )
+
+getInput (
+    prt Bitte geben sie "Schere", "Stein" oder "Papier": ::END
+    inp str
+    put acc r1
+    str lower r1 
+
+    com r1 == schere goto scissors
+    com r1 == stein goto rock 
+    com r1 == papier goto paper
+
+    pop r1
+    com r1 == 0 goto getInput
+)
+
+endr111 ( prt Schere gegen Schere. Unentschieden! ::END )
+endr11 ( prt Schere schlaegt Papier. Sie haben gewonnen! ::END )
+endr1 ( prt Stein schlaegt Schere. Der Gegner gewinnt! ::END )
+checkr111 ( com r-1 == Schere goto endr111 )
+checkr11 ( com r-1 == Papier goto endr11 ?? checkr111 )
+checkr1 ( com r-1 == Stein goto endr1 ?? checkr11 )
+
+endr222 ( prt Schere gegen Papier. Der Gegner gewinnt! ::END )
+endr22 ( prt Papier gegen Papier. Unentschieden! ::END )
+endr2 ( prt Papier schlaegt Stein. Sie haben gewonnen! ::END )
+checkr222 ( com r-1 == Schere goto endr222 )
+checkr22 ( com r-1 == Papier goto endr22 ?? checkr222 )
+checkr2 ( com r-1 == Stein goto endr2 ?? checkr22 )
+
+endr333 ( prt Stein gegen Schere. Sie haben gewonnen! ::END )
+endr33 ( prt Papier schlaegt Stein. Der Gegner gewinnt! ::END )
+endr3 ( prt Stein gegen Stein. Unentschieden! ::END )
+checkr333 ( com r-1 == Schere goto endr333 )
+checkr33 ( com r-1 == Papier goto endr33 ?? checkr333 )
+checkr3 ( com r-1 == Stein goto endr3 ?? checkr33 )
+
+condition (
+    com r1 == Schere goto checkr1
+    com r1 == Papier goto checkr2
+    com r1 == Stein goto checkr3
+)
+
+:game (
+    rnd r-1 1:3
+    com r-1 == 1 goto scissors
+    com r-1 == 2 goto paper 
+    com r-1 == 3 goto rock
+    pop r-1
+
+    goto getInput
+    prt ::END 
+    
+    prt Sie haben r1 / Ihr Gegner hat r-1 ::END
+    goto condition 
+    prt ::END 
+    prt - - - - - - - ::END 
+    prt ::END 
+)

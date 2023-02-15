@@ -1,0 +1,70 @@
+    sentence as array-format used to animate typing
+arr mak Text < W i l l k o m m e n \w a m \w B e r u f s k o l l e g \w K r e i s \w H o e x t e r \! >
+
+    progress of the sentence
+put \s r0
+
+    keeping track of the size of the sentence
+arr sze Text
+put acc r1
+
+    current index within the sentence (array)
+put 1 r2 
+
+    printing the current progress
+print1 (
+    prt ::END
+    prt ::END
+    prt r0 ::END
+)
+
+    printing blank ( flashing )
+print2 (
+    prt ::END
+    prt ::END
+    prt ::END
+)
+
+    resets the progress -> program runs from again from the beginning
+reset (
+    slp 0.3
+    goto print1
+
+    slp 0.3
+    goto print2
+
+    slp 0.3
+    goto print1
+
+    slp 0.3
+    goto print2
+
+    slp 0.3
+    goto print1
+
+    slp 0.3
+    goto print2
+
+    prt reset ::END 
+    put 1 r2
+    put \s r0 
+)
+
+    loop that keeps the program running until it's being shut down
+:displayText (
+        getting the current character
+    arr idx Text r2 
+    put acc r99
+
+        adding it to the progress
+    str add r99 r0
+
+    goto print1 
+
+    slp 0.1
+
+    add r2 1 
+    com r2 > r1 goto reset
+)
+
+

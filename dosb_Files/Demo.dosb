@@ -43,8 +43,8 @@ P2_Move (
 
 
 GetInput (
-    inp int 
-    inp int 
+    inp num 
+ 
     put acc r4
     com r3 == r1 goto P1_Move ?? P2_Move
 )

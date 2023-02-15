@@ -18,7 +18,7 @@ changeDir1 (
 
     goto continue 
 )
-changeDir2 ( 
+changeDir2 (
     put 1 r3 
 
     put r0 r10

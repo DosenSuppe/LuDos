@@ -38,17 +38,14 @@ end
 ]]
 --- Only accepts numbers as input
 DosLib.In.ReadNum = function()
-    local Input
-    local Done = false
-    while (not Done) do
-        Input = io.read()
+    while (true) do
+        local Input = io.read()
         if (tonumber(Input)) then
-            Done = true
+            return tonumber(Input)
         else
             DosLib.Out.Error("Input has to be a number!")
         end
     end
-    return tonumber(Input)
 end
 
 --- Only accepts booleans as input

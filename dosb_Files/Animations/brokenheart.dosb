@@ -1,0 +1,130 @@
+arr mak BLANK < >
+
+arr mak FH0 < \s \s \s \s \s \s \s @@@@@@ \s \s \s \s \s \s \s @@@@@@ >
+arr mak FH1 < \s \s \s \s \s @@@@@@@@@@ \s \s \s  @@@@@@@@@@ >
+arr mak FH2 < \s \s \s @@@@@@@@@@@@@ @@@@@@@@@@@@@ >
+arr mak FH3 < \s \s @@@@@@@@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak FH4 < \s \s \s @@@@@@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak FH5 < \s \s \s \s \s @@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak FH6 < \s \s \s \s \s \s \s @@@@@@@@@@@@@@@@@@@ >
+arr mak FH7 < \s \s \s \s \s \s \s \s \s @@@@@@@@@@@@@@@ > 
+arr mak FH8 < \s \s \s \s \s \s \s \s \s \s \s @@@@@@@@@@@ >
+arr mak FH9 < \s \s \s \s \s \s \s \s \s \s \s \s \s @@@@@@@ >
+arr mak FH10 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @@@ >
+arr mak FH11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @ >
+
+arr mak BH-1 < \s \s \s \s \s \s \s @@@@@ \s \s \s \s \s \s \s \s \s @@@@@ >
+arr mak BH0 < \s \s \s \s \s @@@@@@@@ \s \s \s \s \s \s \s @@@@@@@@ >
+arr mak BH1 < \s \s \s @@@@@@@@@@@@ \s \s \s  @@@@@@@@@@@@ >
+arr mak BH2 < \s @@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@ >
+arr mak BH3 < @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak BH4 < \s @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak BH5 < \s \s \s @@@@@@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak BH6 < \s \s \s \s \s @@@@@@@@@@@@@@@@@@@@@@@ >
+arr mak BH7 < \s \s \s \s \s \s \s @@@@@@@@@@@@@@@@@@@ > 
+arr mak BH8 < \s \s \s \s \s \s \s \s \s @@@@@@@@@@@@@@@ >
+arr mak BH9 < \s \s \s \s \s \s \s \s \s \s \s @@@@@@@@@@@ >
+arr mak BH10 < \s \s \s \s \s \s \s \s \s \s \s \s \s @@@@@@@ >
+arr mak BH11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @@@ >
+arr mak BH12 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @ >
+
+arr mak BrH0 < \s \s \s \s \s \s \s @@@@@@ \s \s \s \s \s \s \s \s \s \s @@@@@@ >
+arr mak BrH1 < \s \s \s \s \s @@@@@@@@@@ \s \s \s \s \s \s @@@@@@@@@@ >
+arr mak BrH2 < \s \s \s @@@@@@@@@@@@@/ \s \s /@@@@@@@@@@@@@ >
+arr mak BrH3 < \s \s @@@@@@@@@@@@@@\ \s \s \@@@@@@@@@@@@@@ >
+arr mak BrH3_1 < \s \s @@@@@@@@@@@@@@@\ \s \s \@@@@@@@@@@@@@ >
+arr mak BrH3_2 < \s \s @@@@@@@@@@@@@@@@\ \s \s \@@@@@@@@@@@@ >
+arr mak BrH4 < \s \s \s @@@@@@@@@@@@@@@/ \s \s /@@@@@@@@@@@ >
+arr mak BrH5 < \s \s \s \s \s @@@@@@@@@@@@/ \s \s /@@@@@@@@@@ >
+arr mak BrH6 < \s \s \s \s \s \s \s @@@@@@@@@/ \s \s /@@@@@@@@@ >
+arr mak BrH7 < \s \s \s \s \s \s \s \s \s @@@@@@/ \s \s /@@@@@@@@ > 
+arr mak BrH8 < \s \s \s \s \s \s \s \s \s \s \s @@@/ \s \s /@@@@@@@ >
+arr mak BrH9 < \s \s \s \s \s \s \s \s \s \s \s \s \s @\ \s \s \@@@@@ >
+arr mak BrH10 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \@@ >
+arr mak BrH11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @ >
+
+arr mak X2H0 < \s \s \s \s \s \s \s @@@@@@ \s \s \s \s \s \s \s \s \s \s @@@@@@ >
+arr mak X2H1 < \s \s \s \s \s @@@@@@@@@@ \s \s \s \s \s \s \s \s @@@@@@@@@@ >
+arr mak X2H2 < \s \s \s @@@@@@@@@@@@@/ \s \s \s \s \s /@@@@@@@@@@@@@ >
+arr mak X2H3 < \s \s @@@@@@@@@@@@@@\ \s \s \s \s \s \@@@@@@@@@@@@@@ >
+arr mak X2H3_1 < \s \s @@@@@@@@@@@@@@@\ \s \s \s \s \s \@@@@@@@@@@@@@ >
+arr mak X2H3_2 < \s \s @@@@@@@@@@@@@@@@\ \s \s \s \s \s \@@@@@@@@@@@@ >
+arr mak X2H4 < \s \s \s @@@@@@@@@@@@@@@/ \s \s \s \s \s /@@@@@@@@@@@ >
+arr mak X2H5 < \s \s \s \s \s @@@@@@@@@@@@/ \s \s \s \s \s /@@@@@@@@@@ >
+arr mak X2H6 < \s \s \s \s \s \s \s @@@@@@@@@/ \s \s \s \s \s /@@@@@@@@@ >
+arr mak X2H7 < \s \s \s \s \s \s \s \s \s @@@@@@/ \s \s \s \s \s /@@@@@@@@ > 
+arr mak X2H8 < \s \s \s \s \s \s \s \s \s \s \s @@@/ \s \s \s \s \s /@@@@@@@ >
+arr mak X2H9 < \s \s \s \s \s \s \s \s \s \s \s \s \s @\ \s \s \s \s \s \@@@@@ >
+arr mak X2H10 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \@@ >
+arr mak X2H11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @ >
+
+arr mak X3H0 < \s \s \s \s \s \s \s @@@@@@ \s \s \s \s \s \s \s \s \s \s \s \s \s \s @@@@@@ >
+arr mak X3H1 < \s \s \s \s \s @@@@@@@@@@ \s \s \s \s \s \s \s \s \s \s \s \s @@@@@@@@@@ >
+arr mak X3H2 < \s \s \s @@@@@@@@@@@@@/ \s \s \s \s \s \s  \s \s /@@@@@@@@@@@@@ >
+arr mak X3H3 < \s \s @@@@@@@@@@@@@@\ \s \s \s \s \s \s \s  \s \@@@@@@@@@@@@@@ >
+arr mak X3H3_1 < \s \s @@@@@@@@@@@@@@@\ \s \s \s \s \s \s  \s \s \@@@@@@@@@@@@@ >
+arr mak X3H3_2 < \s \s @@@@@@@@@@@@@@@@\ \s \s \s \s \s \s  \s \s \@@@@@@@@@@@@ >
+arr mak X3H4 < \s \s \s @@@@@@@@@@@@@@@/ \s \s \s \s \s \s  \s \s /@@@@@@@@@@@ >
+arr mak X3H5 < \s \s \s \s \s @@@@@@@@@@@@/ \s \s \s \s \s  \s \s \s /@@@@@@@@@@ >
+arr mak X3H6 < \s \s \s \s \s \s \s @@@@@@@@@/ \s \s \s \s \s  \s \s \s /@@@@@@@@@ >
+arr mak X3H7 < \s \s \s \s \s \s \s \s \s @@@@@@/ \s \s \s \s \s \s  \s \s /@@@@@@@@ > 
+arr mak X3H8 < \s \s \s \s \s \s \s \s \s \s \s @@@/ \s \s \s \s \s \s  \s \s /@@@@@@@ >
+arr mak X3H9 < \s \s \s \s \s \s \s \s \s \s \s \s \s @\ \s \s \s \s \s  \s \s \s \@@@@@ >
+arr mak X3H10 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s  \s \s \s \s \s \s \@@ >
+arr mak X3H11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s  \s \s \s \s \s \s @ >
+
+
+arr mak X1H0 < \s \s \s \s \s \s \s @@@@@@ \s \s \s \s \s \s \s @@@@@@ >
+arr mak X1H1 < \s \s \s \s \s @@@@@@@@@@ \s \s \s  @@@@@@@@@@ >
+arr mak X1H2 < \s \s \s @@@@@@@@@@@@@/@@@@@@@@@@@@@ >
+arr mak X1H3 < \s \s @@@@@@@@@@@@@@\@@@@@@@@@@@@@@ >
+arr mak X1H3_1 < \s \s @@@@@@@@@@@@@@@\@@@@@@@@@@@@@ >
+arr mak X1H3_2 < \s \s @@@@@@@@@@@@@@@@\@@@@@@@@@@@@ >
+arr mak X1H4 < \s \s \s @@@@@@@@@@@@@@@/@@@@@@@@@@@ >
+arr mak X1H5 < \s \s \s \s \s @@@@@@@@@@@@/@@@@@@@@@@ >
+arr mak X1H6 < \s \s \s \s \s \s \s @@@@@@@@@/@@@@@@@@@ >
+arr mak X1H7 < \s \s \s \s \s \s \s \s \s @@@@@@/@@@@@@@@ > 
+arr mak X1H8 < \s \s \s \s \s \s \s \s \s \s \s @@@/@@@@@@@ >
+arr mak X1H9 < \s \s \s \s \s \s \s \s \s \s \s \s \s @\@@@@@ >
+arr mak X1H10 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \@@ >
+arr mak X1H11 < \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s \s @ >
+
+
+:loop (
+    prt !FH0 !FH1 !FH2 !FH3 !FH3 !FH3 !FH4 !FH5 !FH6 !FH7 !FH8 !FH9 !FH10 !FH11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !BH0 !BH1 !BH2 !BH3 !BH3 !BH3 !BH4 !BH5 !BH6 !BH7 !BH8 !BH9 !BH10 !BH11 !BH12  ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !FH0 !FH1 !FH2 !FH3 !FH3 !FH3 !FH4 !FH5 !FH6 !FH7 !FH8 !FH9 !FH10 !FH11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !BH0 !BH1 !BH2 !BH3 !BH3 !BH3 !BH4 !BH5 !BH6 !BH7 !BH8 !BH9 !BH10 !BH11 !BH12  ::END ::SEP_LINE ::CLEAR
+    slp .1 
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !FH0 !FH1 !FH2 !FH3 !FH3 !FH3 !FH4 !FH5 !FH6 !FH7 !FH8 !FH9 !FH10 !FH11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !X1H0 !X1H1 !X1H2 !X1H3 !X1H3_1 !X1H3_2 !X1H4 !X1H5 !X1H6 !X1H7 !X1H8 !X1H9 !X1H10 !X1H11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !BrH0 !BrH1 !BrH2 !BrH3 !BrH3_1 !BrH3_2 !BrH4 !BrH5 !BrH6 !BrH7 !BrH8 !BrH9 !BrH10 !BrH11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !X2H0 !X2H1 !X2H2 !X2H3 !X2H3_1 !X2H3_2 !X2H4 !X2H5 !X2H6 !X2H7 !X2H8 !X2H9 !X2H10 !X2H11 ::END ::SEP_LINE ::CLEAR
+    slp .1
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+    prt !X3H0 !X3H1 !X3H2 !X3H3 !X3H3_1 !X3H3_2 !X3H4 !X3H5 !X3H6 !X3H7 !X3H8 !X3H9 !X3H10 !X3H11 ::END ::SEP_LINE ::CLEAR
+    slp 2
+    prt !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK !BLANK ::END ::SEP_LINE ::CLEAR
+    slp .005
+)
