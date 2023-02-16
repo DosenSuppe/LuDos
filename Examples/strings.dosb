@@ -1,0 +1,46 @@
+    strings can be manipulated by the so called str-libary
+    you first have to create a "string" by assigning any value to a register
+    ------------------------------------------------------
+put Hello r0 
+
+    now lets Add some words to the register with the help of the add-function
+    ---------------------------------------
+str add World! r0 space  -- we are now adding "World!" to the r0-register. the "space" adds a space between the current and added-to word
+
+    now we can print the string
+    ---------------------------
+prt r0 ::END
+
+    Why not make everything uppercase?
+    ----------------------------------
+str upper r0 
+
+prt r0 ::END 
+
+    Alright, back to lower-case
+    ---------------------------
+str lower r0 
+prt r0 ::END 
+
+    How about we split it up, converting it into an array
+    -----------------------------------------------------
+str split r0 W    -- we are splitting at the "W"-character
+prt r0 ::END 
+
+    What if we have an array and want to make it to a string?
+    ---------------------------------------------------------
+arr mak MyPhrase < Hello! This is DOSB! >
+str con !MyPhrase r1 -- notice that we are using the "!" again as we are accessing the array's content
+
+prt r1 ::END 
+
+    Lets shorten that phrase to just the "Hello!"
+    ---------------------------------------------
+str sze r1 -- getting the length of the string 
+put acc r2 -- storing the length in the r2-register
+
+sub r2 6 -- first 6 letters are for the "Hello!"
+
+str sub r2 r1 -- substracting from the back to front
+prt r1 ::END 
+
