@@ -1,0 +1,22 @@
+    arrays can be created using the arr-libary:
+    -------------------------------------------
+arr mak MyArray < >
+
+    lets Add some elements to our array
+    -----------------------------------
+arr add MyArray LuDos 
+arr add MyArray Hello 
+arr add MyArray World!
+
+    now we can print the content of the array 
+    -----------------------------------------
+prt !MyArray ::END -- the "!" tells the compiler to return the content of the given array 
+
+    lets remove the "LuDos" element within the array 
+    ------------------------------------------------
+arr rem MyArray 1 
+
+    now we print it again, this time we remove all formating
+    --------------------------------------------------------
+prt !MyArray ::END ::CLEAR 
+

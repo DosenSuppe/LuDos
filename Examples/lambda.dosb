@@ -1,0 +1,25 @@
+    using lambdas in LuDos:
+
+    create your lambda.
+    ------------------
+lambda MyLambda (
+    x:1
+    y:2
+    z:r0 :
+    x+y-z
+)
+
+    a different style you can create lambdas:
+    -----------------------------------------
+lambda MySecondLambda ( x:1 y:2 z:r0 : x+y+z )
+
+put 3 r0 
+
+    now we can call our lambda-functions 
+    ------------------------------------
+lambda MyLambda         -- as the Lambda is already created it will now return it's result to the accumulator
+put acc r1              -- lets move the content of the accumulator to the r1-register
+
+lambda MySecondLambda   -- now we do the same with our second lambda.
+prt MyLambda's result: r1 ::END        -- we do not have to move the accumulator's content as we just have 2 lambdas in this
+prt MySecondLambda's result: acc ::END 
