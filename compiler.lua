@@ -492,7 +492,7 @@ local function Syntax(DecodedInput)
                 -- e.g.: str sub 3 r1 <- r1 = string.sub(r1, 1, 3)
                 elseif (NextWord == "sub") then
                     local reg = tonumber(FourthWord.Word:sub(2)) or 1
-                    REGISTERS[reg] = string.sub(REGISTERS[reg], 0, -(tonumber(ThirdWord.Word)+1))
+                    REGISTERS[reg] = string.sub(REGISTERS[reg], 0, -GetVal(ThirdWord.Word))
 
                 -- array to string
                 elseif (NextWord == "con") then
@@ -510,6 +510,19 @@ local function Syntax(DecodedInput)
                     local _str = tostring(GetVal(ThirdWord.Word))
                     local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
                     REGISTERS[reg] = string.lower(_str)
+                    Current = Current - 1 
+
+                elseif (NextWord == "upper") then
+                    local _str = tostring(GetVal(ThirdWord.Word))
+                    local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
+                    REGISTERS[reg] = string.upper(_str)
+                    Current = Current - 1
+
+                elseif (NextWord == "sze") then
+                    local _str = tostring(GetVal(ThirdWord.Word))
+                    ACCUMULATOR = #_str
+                    Current = Current - 1
+
                 end
             end
 
