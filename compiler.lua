@@ -2,7 +2,7 @@
 --- Created by Niklas.
 --- DateTime: 8/10/2022 8:20 PM
 --- Describtion:
----         DosLib is a interpreted programming language written in Lua 
+---         DOSB is a programming language written in Lua 
 ---         with a syntax very similar to assembly. 
 ---         DosLib uses instructions (put, pop, ...) to modify values of variables ("registers").
 ---         
@@ -47,16 +47,19 @@ local function Decode(INPUT)
         local char = INPUT:sub(pos, pos)
 
         if char == "\n" then
-            if CurrentWord == "" then goto skip end
+            if CurrentWord == "" then goto skip end 
+
             table.insert(Decoded, { Word = CurrentWord, Line = LinePos })
 
             LinePos = LinePos + 1
             CurrentWord = ""
+
         elseif char == " " then
             if CurrentWord == "" then goto skip end
 
             table.insert(Decoded, { Word = CurrentWord, Line = LinePos })
             CurrentWord = ""
+
         else
             if char ~= "\t" and char ~= " " and char ~= "\n" then
                 CurrentWord = CurrentWord..char
@@ -143,6 +146,7 @@ end
 
 --//
 local function Syntax(DecodedInput)
+
     -- creates an array with given start-index
     local function ConstructArray(CurrentPos)
         local Token = DecodedInput[CurrentPos]
@@ -178,10 +182,6 @@ local function Syntax(DecodedInput)
             table.insert(FunctionBody.Body, Token)
             FunctionBody.Current = FunctionBody.Current  + 1
             Token = DecodedInput[FunctionBody.Current]
-        end
-        
-        for i, c in pairs(BUILD_IN_FUNCTIONS) do
-            
         end
 
         return FunctionBody
@@ -559,7 +559,8 @@ local function Syntax(DecodedInput)
                 elseif (NextWord == "add") then
                     -- adds an given element at bottom position of given array and returns the index to the accumulator
                     -- arr add SomeArray SomeValue
-                    table.insert(ARRAYS[ArrayName], GetVal(DecodedInput[Current+3]))
+
+                    table.insert(ARRAYS[ArrayName], GetVal(DecodedInput[Current+3].Word))
                     Current = Current + 3
 
                 elseif (NextWord == "sze") then
