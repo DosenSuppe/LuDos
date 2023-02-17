@@ -1,0 +1,71 @@
+    creating methods:
+    -----------------
+
+    You can create methods by using the following syntax-styles:
+    ------------------------------------------------------------
+MyMethod (
+    prt Hello there! This is MyMethod! ::END 
+)
+
+    or 
+    --
+MyMethod2
+(
+    prt Hello there! This is also MyMethod ::END 
+)
+
+    or if you feel like it:
+    -----------------------
+MyMethod3 (
+    prt Hello there! This works too ::END )
+
+
+    As you can see, every method has a name and a body. Make sure that between the name of the method and the "(" is a whitespace! same for the end!
+    ----------------------------------------------------
+
+Distance2D (
+    put r0 stack point *x1 
+    put r1 stack point *x2 
+    put r2 stack point *y1
+    put r3 stack point *y2 
+
+    sub *x2 *x1 
+    sub *y2 *y1 
+
+    exp *x2 2
+    exp *y2 2
+
+    add *x2 *y2
+
+    exp *x2 0.5
+
+    prt The distance between point1 and point2 is: *x2 ::END
+
+        make sure to delete not-used pointers
+        -------------------------------------
+    del *x1
+    del *x2 
+    del *y1
+    del *y2
+)
+
+
+prt Please enter a "x" value for point1 ::END 
+inp num
+put acc r0
+
+prt Please enter a "y" value for point1 ::END
+inp num
+put acc r1 
+
+prt Please enter a "x" value for point2 ::END
+inp num
+put acc r2 
+
+prt Please enter a "y" value for point2 ::END 
+inp num
+put acc r3 
+
+
+goto Distance2D
+

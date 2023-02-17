@@ -1,0 +1,21 @@
+    loops can be created like methods:
+    ----------------------------------
+
+
+:LoopName ( -- note that a loop is set via the ":" keyword at it's name start
+    -- this is the body of the loop 
+    -- note that you cannot have a loop inside a loop as of now 
+
+    prt r0 ::END 
+
+    add r0 -- increment the value by 1 
+    
+        -- "break" is a keyword/ method that exits a loop 
+        -- in this case it is used to exit the loop once it reached 100 iterations
+    com r0 == 100 goto break
+    
+)
+
+
+
+

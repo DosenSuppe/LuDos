@@ -97,7 +97,7 @@ end
 
 -- updates the position of pointers
 local function UpdatePointers()
-    for i, pointer in ipairs(POINTERS) do
+    for i, pointer in pairs(POINTERS) do
         POINTERS[i] = pointer+1
     end
 end
@@ -312,8 +312,11 @@ local function Syntax(DecodedInput)
 
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(NextWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value + AddTo
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = Value + AddTo
+                    else
+                        STACK[POINTERS[NextWord]] = Value + AddTo
+                    end
 
                     Current = Current + 2
                 end
@@ -330,8 +333,11 @@ local function Syntax(DecodedInput)
 
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(NextWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value % Mod
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = Value % Mod
+                    else
+                        STACK[POINTERS[NextWord]] = Value % Mod
+                    end
 
                     Current = Current + 2
                 end
@@ -371,11 +377,14 @@ local function Syntax(DecodedInput)
             if (NextWord) then
                 if (DecodedInput[Current+2]) then
                     local ThirdWord = DecodedInput[Current+2].Word
-                    local AddTo = GetVal(ThirdWord)
-                    local Value = GetVal(NextWord)
+                    local AddTo = GetVal(NextWord)
+                    local Value = GetVal(ThirdWord)
 
-                    local BufferX = tonumber(ThirdWord:sub(2)) or 1
-                    REGISTERS[BufferX] = AddTo ^ Value
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = AddTo^Value 
+                    else
+                        STACK[POINTERS[NextWord]] = AddTo^Value
+                    end
 
                     Current = Current + 2
                 end
@@ -395,8 +404,11 @@ local function Syntax(DecodedInput)
 
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(NextWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value - SubTo
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = Value - SubTo
+                    else
+                        STACK[POINTERS[NextWord]] = Value - SubTo
+                    end
 
                     Current = Current + 2
                 end
@@ -434,14 +446,17 @@ local function Syntax(DecodedInput)
                 if (DecodedInput[Current+2]) then
 
                     local ThirdWord = DecodedInput[Current+2].Word
-                    local SubTo = tonumber(GetVal(ThirdWord)) or 2
+                    local SubTo = GetVal(ThirdWord) or 2
 
                     if (tonumber(GetVal(ThirdWord)) == nil) then Current = Current - 1 end
 
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(NextWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value * SubTo
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = Value * SubTo
+                    else
+                        STACK[POINTERS[NextWord]] = Value * SubTo
+                    end
 
                     Current = Current + 2
                 end
@@ -460,8 +475,11 @@ local function Syntax(DecodedInput)
 
                     local Value = GetVal(NextWord)
 
-                    local BufferX = tonumber(NextWord:sub(2)) or 1
-                    REGISTERS[BufferX] = Value / SubTo
+                    if (NextWord:sub(1,1) == "r") then
+                        REGISTERS[tonumber(NextWord:sub(2))] = Value / SubTo
+                    else
+                        STACK[POINTERS[NextWord]] = Value / SubTo
+                    end
 
                     Current = Current + 2
                 end
@@ -473,12 +491,12 @@ local function Syntax(DecodedInput)
             local FourthWord = DecodedInput[Current+3]
 
             -- !!!! variables used in string instructions have to be string-initialized via "put" instruction !!!!
-            -- e.g.: put "Hello" r1 
-            -- e.g.: put " " r2
+            -- e.g.: put Hello r1 
+            -- e.g.: put \s r2
 
             if (NextWord) then
                 -- adds a word to given string stored in a variable
-                -- e.g.: str add "World" r1 <- r1 = r1.."World" -> "Hello World" // note that a space " " is beind added automatically! 
+                -- e.g.: str add World r1 space <- r1 = r1.."World" -> "Hello World" // note that the space has been added because of the "space"-keyword
                 if (NextWord == "add") then
                     local reg = tonumber(FourthWord.Word:sub(2)) or 1
                     local sep = ""
@@ -504,8 +522,9 @@ local function Syntax(DecodedInput)
                     local String = GetVal(ThirdWord.Word, false)
                     local seperator = GetVal(FourthWord.Word, false)
                     local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
-                    REGISTERS[reg] = DosLib.String.split(String, seperator)
-
+                    print(String, seperator)
+                    
+                    
                 elseif (NextWord == "lower") then
                     local _str = tostring(GetVal(ThirdWord.Word))
                     local reg = tonumber(DecodedInput[Current+4].Word:sub(2)) or 1
@@ -777,8 +796,9 @@ local function Syntax(DecodedInput)
 
             end
 
-        elseif (Word == "rnd") then
+        elseif (Word == "rnd") then -- rnd register 1:100
             local reg = tonumber(NextWord:sub(2)) or 1
+
             local Range = DosLib.String.split(DecodedInput[Current+2].Word, ":")
 
             -- overwriting the randomseed

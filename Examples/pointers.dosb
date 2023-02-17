@@ -5,10 +5,7 @@ put 10 r0 -- this just places the value 10 in the r0-register
           -- as we do not need to change it anymore.
 
 put r0 stack -- we can put it on the stack.
-             -- values that are on the stack cannot be modified
-             -- directly. They have to be moved out of the stack first.
-             -- The same applies to reading a value within the stack.
-             -- you would have to "pop" it first to read/ modify it.
+             -- values that are on the stack can be modified, however, become independend from the original variable's value
 
 put r0 stack point *MyPointer   -- pointers can make any value on the stack readable without
                                 -- having to "pop" that value from the stack

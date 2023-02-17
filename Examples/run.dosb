@@ -1,0 +1,7 @@
+    lets run another DOSB-File
+    --------------------------
+run ./random.dosb 
+
+    code in this script can be executed still
+    -----------------------------------------
+prt Hello World! ::END 
