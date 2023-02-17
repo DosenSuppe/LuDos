@@ -1,17 +1,12 @@
     lets create some random numbers and multiply them together
     ----------------------------------------------------------
+    
 rnd r0 1:5  -- random number from 1 to 5 -> putting it into r0-register
 rnd r1 1:10 -- random number from 1 to 10 -> putting it into r1-register
 
-    printing the numbers
-    --------------------
-prt r0 \* r1 = ::END 
+prt r0 \* r1 = ::END -- printing the numbers
 
-    multiply them together
-    ----------------------
-mul r0 r1 
+mul r0 r1 -- multiply them together
 
-    printing the result
-    -------------------
-prt r0 ::END 
+prt r0 ::END -- printing the result
 
