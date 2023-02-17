@@ -1,0 +1,30 @@
+    with the io-libary you can read/write to files
+    ------------------------------------------
+
+    lets create a string we want to save:
+    -------------------------------------
+arr mak Hello < Hello World! >
+str con !Hello r0 
+
+    now save the string to some file
+    --------------------------------
+io write ./MyFile.txt ovr r0 
+    -- we are writing to the file called "MyFile.txt".
+    -- that files does not have to exist prior to this command
+    -- the "ovr" keywords tells the compiler to override the file's previous content
+
+    why not insert another string to the file
+    -----------------------------------------
+arr mak Hello2 < Hello There! >
+str con !Hello2 r0 
+
+io write ./MyFile.txt add r0 first_line
+    -- "first_line" tells the compiler to insert the added content to the first line 
+
+    lets check if the content has 
+    -----------------------------
+io read ./MyFile.txt -- reading the file and putting it's content into the accumulator
+put acc r0           -- putting the accumulator into the r0-register
+
+prt r0 ::END 
+

@@ -1,0 +1,39 @@
+    working with pointers:
+    ----------------------
+put 10 r0 -- this just places the value 10 in the r0-register
+          -- now, what if we want to make this value final
+          -- as we do not need to change it anymore.
+
+put r0 stack -- we can put it on the stack.
+             -- values that are on the stack cannot be modified
+             -- directly. They have to be moved out of the stack first.
+             -- The same applies to reading a value within the stack.
+             -- you would have to "pop" it first to read/ modify it.
+
+put r0 stack point *MyPointer   -- pointers can make any value on the stack readable without
+                                -- having to "pop" that value from the stack
+
+prt r0 ::END    -- 10
+prt *MyPointer ::END -- 10
+
+sub r0 10 
+prt r0 ::END    -- 0 
+prt *MyPointer ::END -- 10
+
+---------------------------------
+    Now what if we "pop" a value that has been marked with a pointer on the stack?
+    --------------------------------------------
+pop r1 -- removing the stack's first element and putting it in r1-register
+prt *MyPointer ::END -- nil
+                     -- the pointer has now no value to point to anymore, thus making it a nil-pointer
+
+    Another way to delete a pointer is by using the "del"-keywords
+    -----------------------------------------
+del *MyPointer
+
+    You can override pointers at any point
+    --------------------------------------
+put 100 stack point *NumberWithTwoZeros
+put 300 stack point *NumberWithTwoZeros
+
+prt *NumberWithTwoZeros ::END -- 300 
