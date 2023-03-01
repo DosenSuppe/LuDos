@@ -1,0 +1,17 @@
+    lambdas have received a small update:
+    Creating is the same, however you can 
+    now specify the destination for the 
+    result!
+    -------------------------------------
+
+lambda MyLambda ( x:1 y:r0 : x+y )
+
+put 1 r0 
+lambda MyLambda
+prt acc ::END       -- prints the result "2"
+
+put 3 r0 
+lambda MyLambda -> r2 
+prt acc ::END       -- still the same as the accumulator has not been touched
+prt r2 ::END        -- prints the result "4"
+
