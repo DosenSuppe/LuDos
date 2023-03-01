@@ -846,7 +846,18 @@ local function Syntax(DecodedInput)
 
             -- calling the lambda
             if (LAMBDABODIES[Name] and DecodedInput[Current+2].Word ~= "(") then
-                ACCUMULATOR = load(constructLambda(LAMBDABODIES[Name]))()
+                local StoreLocation = ACCUMULATOR
+                if (DecodedInput[Current+2].Word == "->") then
+                    local Register = tonumber(DecodedInput[Current+3].Word:sub(2))
+                    if (Register) then
+                        REGISTERS[Register] = load(constructLambda(LAMBDABODIES[Name]))()
+                        Current = Current + 2
+                    end
+                else
+                    ACCUMULATOR = load(constructLambda(LAMBDABODIES[Name]))()
+                end
+
+                
                 Current = Current + 1
 
             else
